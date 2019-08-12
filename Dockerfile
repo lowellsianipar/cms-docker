@@ -34,13 +34,11 @@ ENV PHALCON_VERSION=3.0.2
 
 WORKDIR /usr/src/php/ext/
 
-RUN set -xe
-RUN curl -LO https://github.com/phalcon/cphalcon/archive/v${PHALCON_VERSION}.tar.gz
-RUN tar xzf v${PHALCON_VERSION}.tar.gz
-RUN cd cphalcon-${PHALCON_VERSION}/build
-RUN sh install
-RUN echo "extension=phalcon.so" > /usr/local/etc/php/conf.d/phalcon.ini
-RUN cd ../.. && rm -rf v${PHALCON_VERSION}.tar.gz cphalcon-${PHALCON_VERSION} 
+RUN set -xe && \
+    curl -LO https://github.com/phalcon/cphalcon/archive/v${PHALCON_VERSION}.tar.gz && \
+    tar xzf v${PHALCON_VERSION}.tar.gz && cd cphalcon-${PHALCON_VERSION}/build && sh install && \
+    echo "extension=phalcon.so" > /usr/local/etc/php/conf.d/phalcon.ini && \
+    cd ../.. && rm -rf v${PHALCON_VERSION}.tar.gz cphalcon-${PHALCON_VERSION}
 
 # Install nginx
 RUN mkdir -p /run/nginx
