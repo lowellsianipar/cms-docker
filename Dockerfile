@@ -41,14 +41,3 @@ RUN mkdir -p /run/nginx
 RUN apk add --no-cache nginx
 RUN rc-update add nginx default
 
-# Add application directory
-WORKDIR /cms
-COPY . /cms
-RUN mv /cms/app/config/env.ini.example /cms/app/config/env.ini
-RUN chmod -R o+w cache
-
-# Stage runtime application
-COPY nginx.conf /etc/nginx/conf.d/default.conf
-ENTRYPOINT ["sh", "-c", "nginx && php-fpm"]
-
-EXPOSE 80
